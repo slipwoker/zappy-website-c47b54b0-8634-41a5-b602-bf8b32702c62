@@ -1,0 +1,679 @@
+<!DOCTYPE html><html lang="en" dir="ltr"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Services - נור זיד ושות׳ - משרד עורכי דין</title>
+  <meta name="description" content="Services - נור זיד ושות׳ - משרד עורכי דין provides professional General services. Specializing in social media marketing services.">
+  <meta name="keywords" content="social media marketing services, integrated marketing communications, 4ps of marketing, marketing consultant">
+  <meta name="robots" content="index, follow">
+  
+  <meta property="og:title" content="Services - נור זיד ושות׳ - משרד עורכי דין">
+  <meta property="og:description" content="Services - נור זיד ושות׳ - משרד עורכי דין provides professional General services. Specializing in social media marketing services.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="en_US">
+  
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Services - נור זיד ושות׳ - משרד עורכי דין">
+  <meta name="twitter:description" content="Services - נור זיד ושות׳ - משרד עורכי דין provides professional General services. Specializing in social media marketing services.">
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="/assets/favicon-48x48.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="/assets/favicon-512x512.png">
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+    <!-- Cookie Consent -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vanilla-cookieconsent@3/dist/cookieconsent.css" />
+    <script src="https://cdn.jsdelivr.net/npm/vanilla-cookieconsent@3/dist/cookieconsent.umd.js"></script>
+    <!-- Mickidum Accessibility Toolbar -->
+    <script src="https://cdn.jsdelivr.net/gh/mickidum/acc_toolbar/acctoolbar/acctoolbar.min.js"></script>
+<!-- Zappy Analytics -->
+<script>
+(function() {
+  'use strict';
+  
+  // Configuration
+  var config = {
+    websiteId: 'c47b54b0-8634-41a5-b602-bf8b32702c62',
+    apiUrl: 'https://api.zappy5.com/api/analytics/track',
+    sessionDuration: 30 * 60 * 1000, // 30 minutes
+    visitorDuration: 30 * 24 * 60 * 60 * 1000, // 30 days
+    trackPageViews: true,
+    trackClicks: true,
+    trackFormSubmissions: true
+  };
+  
+  // Generate or retrieve persistent visitor ID (30 days)
+  function getVisitorId() {
+    var visitorKey = 'zappy_visitor_' + config.websiteId;
+    var visitor = null;
+    
+    try {
+      visitor = localStorage.getItem(visitorKey);
+      if (visitor) {
+        var visitorData = JSON.parse(visitor);
+        var now = Date.now();
+        
+        // Check if visitor ID is still valid (30 days)
+        if (now - visitorData.created < config.visitorDuration) {
+          // Update last seen timestamp
+          visitorData.lastSeen = now;
+          localStorage.setItem(visitorKey, JSON.stringify(visitorData));
+          return visitorData.id;
+        }
+      }
+    } catch (e) {
+      console.warn('Zappy Analytics: LocalStorage not available');
+    }
+    
+    // Generate new visitor ID
+    var newVisitorId = 'zv_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+    
+    try {
+      localStorage.setItem(visitorKey, JSON.stringify({
+        id: newVisitorId,
+        created: Date.now(),
+        lastSeen: Date.now()
+      }));
+    } catch (e) {
+      // Continue without local storage
+    }
+    
+    return newVisitorId;
+  }
+  
+  // Generate or retrieve session ID (30 minutes)
+  function getSessionId() {
+    var sessionKey = 'zappy_session_' + config.websiteId;
+    var session = null;
+    
+    try {
+      session = sessionStorage.getItem(sessionKey);
+      if (session) {
+        var sessionData = JSON.parse(session);
+        var now = Date.now();
+        
+        // Check if session is still valid
+        if (now - sessionData.timestamp < config.sessionDuration) {
+          // Update timestamp
+          sessionData.timestamp = now;
+          sessionStorage.setItem(sessionKey, JSON.stringify(sessionData));
+          return sessionData.id;
+        }
+      }
+    } catch (e) {
+      console.warn('Zappy Analytics: SessionStorage not available');
+    }
+    
+    // Generate new session ID
+    var newSessionId = 'zs_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+    
+    try {
+      sessionStorage.setItem(sessionKey, JSON.stringify({
+        id: newSessionId,
+        timestamp: Date.now()
+      }));
+    } catch (e) {
+      // Continue without session storage
+    }
+    
+    return newSessionId;
+  }
+  
+  var visitorId = getVisitorId();
+  var sessionId = getSessionId();
+  
+  // Track an event
+  function trackEvent(eventType, data) {
+    data = data || {};
+    
+    var eventData = {
+      website_id: config.websiteId,
+      event_type: eventType,
+      page_path: window.location.pathname,
+      referrer: document.referrer || 'direct',
+      visitor_id: visitorId,
+      session_id: sessionId,
+      metadata: data
+    };
+    
+    // Use sendBeacon if available (better for page unload events)
+    if (navigator.sendBeacon) {
+      var blob = new Blob([JSON.stringify(eventData)], { type: 'application/json' });
+      navigator.sendBeacon(config.apiUrl, blob);
+    } else {
+      // Fallback to fetch
+      fetch(config.apiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(eventData),
+        keepalive: true
+      }).catch(function(error) {
+        console.warn('Zappy Analytics: Failed to track event', error);
+      });
+    }
+  }
+  
+  // Track page view
+  if (config.trackPageViews) {
+    trackEvent('pageview', {
+      title: document.title,
+      url: window.location.href
+    });
+  }
+  
+  // Track clicks on important elements
+  if (config.trackClicks) {
+    document.addEventListener('click', function(e) {
+      var target = e.target;
+      
+      // Track button clicks (counted as actions)
+      if (target.tagName === 'BUTTON' || target.closest('button')) {
+        var button = target.tagName === 'BUTTON' ? target : target.closest('button');
+        trackEvent('click', {
+          element: 'button',
+          text: button.textContent.trim().substring(0, 100),
+          id: button.id || null,
+          class: button.className || null
+        });
+      }
+      
+      // Track link clicks (navigation - not counted as actions)
+      else if (target.tagName === 'A' || target.closest('a')) {
+        var link = target.tagName === 'A' ? target : target.closest('a');
+        trackEvent('navigation', {
+          element: 'link',
+          text: link.textContent.trim().substring(0, 100),
+          href: link.href,
+          external: link.hostname !== window.location.hostname
+        });
+      }
+    }, true);
+  }
+  
+  // Track form submissions
+  if (config.trackFormSubmissions) {
+    document.addEventListener('submit', function(e) {
+      var form = e.target;
+      
+      trackEvent('form_submit', {
+        form_id: form.id || null,
+        form_name: form.name || null,
+        form_action: form.action || null,
+        form_method: form.method || 'GET'
+      });
+    }, true);
+  }
+  
+  // Track time on page (send on page unload)
+  var pageLoadTime = Date.now();
+  
+  window.addEventListener('beforeunload', function() {
+    var timeOnPage = Math.floor((Date.now() - pageLoadTime) / 1000); // in seconds
+    
+    trackEvent('page_unload', {
+      time_on_page: timeOnPage,
+      page_path: window.location.pathname
+    });
+  });
+  
+  // Expose tracking function globally for custom events
+  window.zappyAnalytics = {
+    track: trackEvent,
+    getVisitorId: function() { return visitorId; },
+    getSessionId: function() { return sessionId; }
+  };
+  
+})();
+</script>
+<!-- End Zappy Analytics -->
+
+    <style id="zappy-dropdown-submenu-styles">
+      /* ========== DESKTOP DROPDOWN SUBMENU STYLES ========== */
+      /* Base styles for dropdown submenus - parent must be positioned */
+      .nav-menu li:has(.sub-menu), nav li:has(.sub-menu), .navbar li:has(.sub-menu), #navMenu li:has(.sub-menu) { position: relative; }
+      /* Submenu base - hidden by default */
+      .nav-menu .sub-menu, nav .sub-menu, .navbar .sub-menu, #navMenu .sub-menu { display: block !important; position: absolute !important; top: 100%; left: 0; min-width: 220px; background: white; border-radius: 8px; box-shadow: 0 8px 25px rgba(0,0,0,0.15); padding: 8px 0; opacity: 0; visibility: hidden; transform: translateY(10px); transition: all 0.3s ease; z-index: 1000; list-style: none; pointer-events: none; }
+      /* CRITICAL: Desktop hover styles to show dropdown */
+      .nav-menu li:hover > .sub-menu, nav li:hover > .sub-menu, .navbar li:hover > .sub-menu, #navMenu li:hover > .sub-menu { opacity: 1 !important; visibility: visible !important; transform: translateY(0) !important; pointer-events: auto !important; }
+      /* Submenu item styling */
+      .sub-menu li { list-style: none; margin: 0; padding: 0; }
+      .sub-menu a { display: block !important; padding: 10px 16px !important; color: #333 !important; font-weight: 500; text-decoration: none; white-space: nowrap; transition: background-color 0.2s; }
+      .sub-menu a:hover { background-color: #f5f5f5; }
+      /* RTL (Hebrew/Arabic) dropdown positioning */
+      [dir="rtl"] .nav-menu .sub-menu, [dir="rtl"] nav .sub-menu, [dir="rtl"] .navbar .sub-menu, html[lang="he"] .nav-menu .sub-menu, html[lang="he"] nav .sub-menu, html[lang="he"] .navbar .sub-menu, html[lang="ar"] .nav-menu .sub-menu, html[lang="ar"] nav .sub-menu, html[lang="ar"] .navbar .sub-menu { left: auto !important; right: 0 !important; }
+      /* Hide empty dropdown menus */
+      .sub-menu:empty, .sub-menu:not(:has(li:not(.zappy-hidden-menu-item))), .sub-menu:not(:has(li)) { display: none !important; opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; }
+      /* Desktop: show submenu on Menu Group hover */
+      li:has(.menu-group-title):hover > .sub-menu { opacity: 1 !important; visibility: visible !important; transform: translateY(0) !important; pointer-events: auto !important; }
+      /* Menu Group title styling */
+      .nav-menu > li > .menu-group-title, #navMenu > li > .menu-group-title { display: inline-block; padding: 0.5rem 1rem; cursor: default; user-select: none; }
+      
+      /* ========== MOBILE SUBMENU STYLES ========== */
+      @media (max-width: 768px) {
+        .nav-menu .sub-menu, nav .sub-menu, .navbar .sub-menu, #navMenu .sub-menu { position: static !important; transform: none !important; box-shadow: none !important; background: transparent !important; max-height: 0; overflow: hidden; opacity: 0; visibility: hidden; transition: max-height 0.3s ease, opacity 0.3s ease; padding: 0 !important; border-radius: 0 !important; }
+        .sub-menu.mobile-expanded { max-height: 500px !important; opacity: 1 !important; visibility: visible !important; padding: 8px 0 8px 16px !important; }
+        [dir="rtl"] .sub-menu.mobile-expanded, html[lang="he"] .sub-menu.mobile-expanded { padding: 8px 16px 8px 0 !important; }
+        /* Disable hover behavior on mobile */
+        .nav-menu li:hover > .sub-menu, nav li:hover > .sub-menu, .navbar li:hover > .sub-menu, #navMenu li:hover > .sub-menu { opacity: 0; visibility: hidden; pointer-events: none; }
+        .nav-menu li > .sub-menu.mobile-expanded, nav li > .sub-menu.mobile-expanded, .navbar li > .sub-menu.mobile-expanded, #navMenu li > .sub-menu.mobile-expanded { opacity: 1 !important; visibility: visible !important; pointer-events: auto !important; }
+        .nav-menu li:has(.sub-menu), nav li:has(.sub-menu), .navbar li:has(.sub-menu), #navMenu li:has(.sub-menu) { display: flex !important; flex-wrap: wrap !important; align-items: center !important; }
+        .nav-menu li:has(.sub-menu) > a, nav li:has(.sub-menu) > a, .navbar li:has(.sub-menu) > a, #navMenu li:has(.sub-menu) > a { flex: 1 !important; }
+        .nav-menu li:has(.sub-menu) > a [class*="chevron"], .nav-menu li:has(.sub-menu) > a [class*="arrow"], .nav-menu li:has(.sub-menu) > a .fa-chevron-down, .nav-menu li:has(.sub-menu) > a .fa-angle-down, nav li:has(.sub-menu) > a [class*="chevron"], nav li:has(.sub-menu) > a [class*="arrow"], #navMenu li:has(.sub-menu) > a [class*="chevron"], #navMenu li:has(.sub-menu) > a [class*="arrow"] { display: none !important; visibility: hidden !important; }
+        .mobile-submenu-toggle { display: flex !important; align-items: center !important; justify-content: center !important; width: 44px !important; height: 44px !important; background: transparent !important; border: none !important; cursor: pointer !important; }
+        .mobile-submenu-toggle::after { content: '' !important; width: 0 !important; height: 0 !important; border-left: 6px solid transparent !important; border-right: 6px solid transparent !important; border-top: 7px solid currentColor !important; transition: transform 0.3s ease !important; }
+        .mobile-submenu-toggle.expanded::after { transform: rotate(180deg) !important; }
+        .nav-menu li:has(.sub-menu) > .sub-menu, nav li:has(.sub-menu) > .sub-menu { flex-basis: 100% !important; width: 100% !important; }
+        .sub-menu a { padding: 10px 0 !important; display: block !important; }
+        .nav-menu li:has(.sub-menu) > .menu-group-title, nav li:has(.sub-menu) > .menu-group-title, .navbar li:has(.sub-menu) > .menu-group-title, #navMenu li:has(.sub-menu) > .menu-group-title { flex: 1 !important; }
+      }
+      @media (min-width: 769px) { .mobile-submenu-toggle { display: none !important; } }
+    </style>
+</head>
+<body>
+  <nav class="navbar">
+  <button class="mobile-toggle" id="mobileToggle" aria-label="Menu">
+    <svg class="hamburger-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+      <path d="M3 12h18M3 6h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+    </svg>
+    <svg class="close-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" style="display:none;">
+      <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+    </svg>
+  </button>
+  
+  <button class="phone-header-btn" aria-label="Call">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+    </svg>
+  </button>
+  
+  <div class="nav-container">
+    <div class="nav-brand">
+      <a href="/" class="logo-link">
+        <img src="/assets/business-logo.webp" alt="נור זיד ושות׳ - משרד עורכי דין" class="logo" />
+      </a>
+    </div>
+    
+    <ul class="nav-menu" id="navMenu"><li><a href="/services">Services</a></li><li><a href="/about">About</a></li></ul>
+    
+    <div class="nav-cta-container">
+      <a href="/contact" class="nav-cta-btn">Contact</a>
+    </div>
+  </div>
+</nav>
+  
+  <main>
+    <section class="services-page-intro-section" data-layout-spec="Services-page-intro">
+  <div class="services-page-intro-container">
+    <div class="services-page-intro-grid">
+      <div class="services-page-intro-text-block">
+        <h1>Services.</h1>
+        <p>We deliver legal solutions with methodical precision and complete transparency. Every engagement is structured to provide clarity, accountability, and results—ensuring you understand each step and the strategic rationale behind our approach.</p>
+      </div>
+    </div>
+  </div>
+  <div class="services-page-intro-divider-wrapper">
+    <svg data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 1200 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="sandBandGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" style="stop-color:#E9E3D5;stop-opacity:0.3"></stop>
+          <stop offset="100%" style="stop-color:#E9E3D5;stop-opacity:0.8"></stop>
+        </linearGradient>
+      </defs>
+      <path d="M0,60 L0,20 Q300,25 600,22 T1200,20 L1200,60 Z" fill="url(#sandBandGradient)"></path>
+    </svg>
+  </div>
+</section>
+
+<section class="services-capabilities-section" data-layout-spec="Services-capabilities">
+  <div class="services-capabilities-container">
+    <div class="services-capabilities-header">
+      <h2>Our Capabilities</h2>
+      <p class="services-capabilities-intro">Comprehensive legal services delivered with precision, integrity, and strategic insight. Our firm combines traditional legal expertise with modern approaches to meet the evolving needs of our clients.</p>
+    </div>
+
+    <div class="services-capabilities-grid">
+      <div class="capability-card">
+        <h3>Strategic Legal Counsel</h3>
+        <p>Proactive guidance on complex legal matters, helping clients navigate regulatory landscapes and mitigate risk before issues arise. We provide strategic planning and ongoing advisory services tailored to your business objectives.</p>
+      </div>
+
+      <div class="capability-card">
+        <h3>Contract &amp; Negotiation</h3>
+        <p>Expert drafting, review, and negotiation of commercial agreements, ensuring your interests are protected while facilitating smooth business transactions. We handle everything from simple contracts to multi-party joint ventures.</p>
+      </div>
+
+      <div class="capability-card">
+        <h3>Dispute Resolution</h3>
+        <p>Skilled representation in litigation, arbitration, and mediation proceedings. Our team combines courtroom experience with alternative dispute resolution expertise to achieve the best outcomes for our clients.</p>
+      </div>
+
+      <div class="capability-card">
+        <h3>Corporate Governance</h3>
+        <p>Comprehensive support for corporate structure, compliance, and governance matters. We assist with entity formation, board advisory, shareholder agreements, and ongoing regulatory compliance.</p>
+      </div>
+
+      <div class="capability-card">
+        <h3>Regulatory Compliance</h3>
+        <p>Navigate complex regulatory requirements with confidence. Our team stays current with evolving legislation and provides practical compliance frameworks that protect your organization while enabling growth.</p>
+      </div>
+
+      <div class="capability-card">
+        <h3>Risk Management</h3>
+        <p>Identify, assess, and mitigate legal risks across your operations. We conduct comprehensive risk audits and develop tailored policies and procedures to safeguard your business interests.</p>
+      </div>
+    </div>
+
+    <div class="engagement-outputs-section">
+      <h3>Engagement Outputs &amp; Checkpoints</h3>
+      <div class="engagement-table-wrapper">
+        <table class="engagement-table">
+          <thead>
+            <tr>
+              <th>Phase</th>
+              <th>Deliverables &amp; Checkpoints</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Initial Consultation</strong></td>
+              <td>Comprehensive case assessment, scope definition, strategy outline, and engagement letter. Initial checkpoint meeting to align expectations and establish communication protocols.</td>
+            </tr>
+            <tr>
+              <td><strong>Research &amp; Analysis</strong></td>
+              <td>Legal research memoranda, case law analysis, regulatory review, and preliminary findings report. Mid-phase checkpoint to review discoveries and adjust strategy as needed.</td>
+            </tr>
+            <tr>
+              <td><strong>Strategy Development</strong></td>
+              <td>Detailed action plan, draft documents, negotiation frameworks, and timeline milestones. Strategy review checkpoint with client approval before proceeding to execution.</td>
+            </tr>
+            <tr>
+              <td><strong>Execution &amp; Closure</strong></td>
+              <td>Final agreements, court filings, settlement documents, or transaction completion. Post-engagement review, knowledge transfer, and ongoing support recommendations.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="services-capabilities-divider-wrapper">
+    <svg data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 1200 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,60 L0,0 L1180,0 L1200,20 L1200,60 Z" fill="var(--bg-light)"></path>
+    </svg>
+  </div>
+</section>
+
+<section class="services-process-section" data-layout-spec="Services-process">
+  <div class="services-process-container">
+    <div class="services-process-content">
+      <div class="services-process-steps">
+        <div class="services-process-header">
+          <h2>How the work runs</h2>
+        </div>
+        <div class="services-process-timeline">
+          <div class="services-process-step">
+            <h3>1. Discover</h3>
+            <p>We begin by understanding your legal needs, objectives, and the specific circumstances of your case. You'll meet with our team to outline your goals and review all relevant documentation.</p>
+          </div>
+          <div class="services-process-step">
+            <h3>2. Define</h3>
+            <p>After our initial consultation, we define the scope of representation and develop a clear strategy. You'll receive a detailed proposal outlining our approach, timeline, and fee structure for your approval.</p>
+          </div>
+          <div class="services-process-step">
+            <h3>3. Produce</h3>
+            <p>Our team prepares all necessary legal documents, briefs, and correspondence. We draft contracts, pleadings, or agreements with meticulous attention to detail, ensuring every clause serves your interests.</p>
+          </div>
+          <div class="services-process-step">
+            <h3>4. Review</h3>
+            <p>Before any filing or submission, you review all documents with our guidance. We walk you through each section, answer your questions, and incorporate your feedback to ensure complete alignment.</p>
+          </div>
+          <div class="services-process-step">
+            <h3>5. Launch</h3>
+            <p>Once approved, we execute the strategy—filing documents with the court, negotiating with counterparties, or finalizing agreements. You receive regular updates on all developments and next steps.</p>
+          </div>
+          <div class="services-process-step">
+            <h3>6. Measure</h3>
+            <p>After resolution or completion, we review outcomes with you and assess whether objectives were met. We provide a comprehensive summary and discuss any ongoing obligations or follow-up actions.</p>
+          </div>
+        </div>
+      </div>
+      <div class="services-process-image-column">
+        <div class="services-process-image-wrapper">
+          <img data-placeholder="services-process-image-1" data-context="Professional law office working session: modern desk with open legal documents, laptop showing contract drafts, elegant pen, legal notepad with handwritten notes, warm natural lighting from window, organized and trustworthy atmosphere, neutral tones, realistic photography" width="600" height="800" src="/assets/site-services-process-image-1.webp" alt="Legal consultation and document review session">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="services-process-divider-wrapper">
+    <svg data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 1200 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,60 L0,30 L800,30 Q850,28 900,32 T1000,28 Q1050,32 1100,28 L1200,30 L1200,60 Z" fill="#F7F2EC"></path>
+    </svg>
+  </div>
+</section>
+
+<section class="services-faq-section" data-layout-spec="Services-faq">
+  <div class="services-faq-container">
+    <div class="services-faq-content">
+      <div class="services-faq-main">
+        <h2 class="services-faq-title">Questions, answered.</h2>
+        
+        <div class="services-faq-accordion">
+          <div class="services-faq-item">
+            <button class="services-faq-question" aria-expanded="false">
+              <h3>What is the typical scope of your legal services?</h3>
+              <svg class="services-faq-icon" data-element-type="icon" data-icon-type="svg" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </button>
+            <div class="services-faq-answer">
+              <p>Our practice encompasses a wide range of legal matters including corporate law, commercial litigation, real estate transactions, and regulatory compliance. We tailor each engagement to your specific needs, providing comprehensive counsel from initial consultation through resolution. Our integrated marketing communications approach ensures all stakeholders remain informed throughout the process.</p>
+            </div>
+          </div>
+
+          <div class="services-faq-item">
+            <button class="services-faq-question" aria-expanded="false">
+              <h3>How long does a typical legal matter take to resolve?</h3>
+              <svg class="services-faq-icon" data-element-type="icon" data-icon-type="svg" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </button>
+            <div class="services-faq-answer">
+              <p>Timelines vary significantly based on complexity and jurisdiction. Simple contract reviews may take 1-2 weeks, while complex litigation can extend 12-24 months. During our initial consultation, we provide realistic timeline estimates and keep you informed of progress through regular status updates and milestone reports.</p>
+            </div>
+          </div>
+
+          <div class="services-faq-item">
+            <button class="services-faq-question" aria-expanded="false">
+              <h3>How do you collaborate with clients throughout the process?</h3>
+              <svg class="services-faq-icon" data-element-type="icon" data-icon-type="svg" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </button>
+            <div class="services-faq-answer">
+              <p>We believe in transparent, proactive communication. You'll have direct access to your assigned attorney via phone, email, and scheduled meetings. We provide secure document sharing, regular progress reports, and involve you in all strategic decisions. Our collaborative approach ensures your voice is heard at every stage.</p>
+            </div>
+          </div>
+
+          <div class="services-faq-item">
+            <button class="services-faq-question" aria-expanded="false">
+              <h3>What reporting and documentation will I receive?</h3>
+              <svg class="services-faq-icon" data-element-type="icon" data-icon-type="svg" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </button>
+            <div class="services-faq-answer">
+              <p>You'll receive comprehensive documentation including engagement letters, case summaries, court filings, correspondence, and detailed billing statements. We provide monthly progress reports for ongoing matters and immediate notification of significant developments. All documents are organized in a secure client portal for easy access.</p>
+            </div>
+          </div>
+
+          <div class="services-faq-item">
+            <button class="services-faq-question" aria-expanded="false">
+              <h3>How are your fees structured?</h3>
+              <svg class="services-faq-icon" data-element-type="icon" data-icon-type="svg" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </button>
+            <div class="services-faq-answer">
+              <p>We offer flexible fee arrangements including hourly rates, flat fees for specific services, and contingency arrangements where appropriate. During your consultation, we'll discuss your matter and recommend the most cost-effective structure. All fees are transparently outlined in our engagement letter with no hidden costs.</p>
+            </div>
+          </div>
+
+          <div class="services-faq-item">
+            <button class="services-faq-question" aria-expanded="false">
+              <h3>Do you handle matters outside your primary practice areas?</h3>
+              <svg class="services-faq-icon" data-element-type="icon" data-icon-type="svg" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </button>
+            <div class="services-faq-answer">
+              <p>While we specialize in specific areas, we maintain a network of trusted legal professionals for matters outside our core expertise. If your case requires specialized knowledge, we'll either collaborate with appropriate counsel or provide referrals to qualified attorneys. Our priority is ensuring you receive the best representation for your specific needs.</p>
+            </div>
+          </div>
+
+          <div class="services-faq-item">
+            <button class="services-faq-question" aria-expanded="false">
+              <h3>What happens during the initial consultation?</h3>
+              <svg class="services-faq-icon" data-element-type="icon" data-icon-type="svg" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </button>
+            <div class="services-faq-answer">
+              <p>Your consultation is an opportunity to discuss your legal matter in detail. We'll review relevant documents, assess your situation, explain your options, and outline potential strategies. You'll receive an honest evaluation of your case, timeline expectations, and fee structure. This meeting is confidential and establishes the foundation for our working relationship.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <aside class="services-faq-sidebar">
+        <div class="services-faq-cta-card">
+          <h3>Need specific guidance?</h3>
+          <p>Every legal matter is unique. If your question isn't answered here, or if you'd like a tailored recommendation for your situation, we're here to help.</p>
+          <a href="/contact" class="btn-primary">Get in touch</a>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+  </main>
+  
+  <footer class="site-footer">
+  <div class="footer-container">
+    <div class="footer-content">
+      <div class="footer-column footer-about">
+        <img src="/assets/business-logo.webp" alt="נור זיד ושות׳ - משרד עורכי דין" class="logo" />
+        <p class="footer-description">משרד עורכי דין מוביל המתמחה במתן שירותים משפטיים מקצועיים ואישיים ללקוחותינו.</p>
+      </div>
+      
+      <div class="footer-column footer-links">
+        <h3>קישורים מהירים</h3>
+        <ul>
+          <li><a href="/services">שירותים</a></li>
+          <li><a href="/about">אודות</a></li>
+          <li><a href="/contact">צור קשר</a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-column footer-contact">
+        <h3>פרטי התקשרות</h3>
+        <ul>
+          <li><i class="fas fa-envelope"></i> <a href="mailto:[business_email]">[business_email]</a></li>
+          <li><i class="fas fa-phone"></i> <a href="tel:[business_phone]">[business_phone]</a></li>
+          <li><a href="/"><i class="fas fa-map-marker-alt"></i> <span>[business_address]</span></a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-column footer-social">
+        <h3>עקבו אחרינו</h3>
+        <div class="social-links">
+          <a href="[facebook_handle]" aria-label="Facebook" target="_blank" rel="noopener"><i class="fab fa-facebook-f"></i></a>
+          <a href="[instagram_handle]" aria-label="Instagram" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>
+          <a href="[whatsapp_handle]" aria-label="WhatsApp" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a>
+        </div>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <div class="footer-legal">
+        <a href="/privacy">מדיניות פרטיות</a>
+        <span class="separator">|</span>
+        <a href="/terms">תנאים והגבלות</a>
+        <span class="separator">|</span>
+        <a href="/accessibility">נגישות</a>
+      </div>
+      
+      <div class="footer-copyright">
+        <p>© 2026 נור זיד ושות׳ - משרד עורכי דין. All rights reserved.</p>
+      </div>
+      
+      <div class="footer-attribution">
+        <a href="https://zappy5.com" target="_blank" class="zappy-attribution" rel="noopener">Generated by Zappy</a>
+      </div>
+    </div>
+  </div>
+</footer>
+  
+  <a href="https://wa.me/[whatsapp_handle]" class="whatsapp-float" aria-label="WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+  
+  <script src="/script.js"></script>
+
+    <div data-integration="accessibility:toolbar"></div>
+
+    <script id="zappy-mobile-submenu-script">
+    (function() {
+      function initMobileSubmenuToggles() {
+        if (window.innerWidth > 768) {
+          document.querySelectorAll('.mobile-submenu-toggle').forEach(function(btn) { btn.remove(); });
+          document.querySelectorAll('.sub-menu.mobile-expanded').forEach(function(menu) { menu.classList.remove('mobile-expanded'); });
+          return;
+        }
+        var items = document.querySelectorAll('.nav-menu li:has(.sub-menu), nav li:has(.sub-menu), .navbar li:has(.sub-menu), #navMenu li:has(.sub-menu)');
+        items.forEach(function(li) {
+          if (li.querySelector('.mobile-submenu-toggle')) return;
+          var submenu = li.querySelector('.sub-menu');
+          var parentLink = li.querySelector(':scope > a');
+          if (!submenu || !parentLink) return;
+          var toggleBtn = document.createElement('button');
+          toggleBtn.className = 'mobile-submenu-toggle';
+          toggleBtn.setAttribute('aria-label', 'Toggle submenu');
+          toggleBtn.setAttribute('type', 'button');
+          parentLink.insertAdjacentElement('afterend', toggleBtn);
+          toggleBtn.addEventListener('click', function(e) {
+            e.preventDefault(); e.stopPropagation();
+            document.querySelectorAll('.sub-menu.mobile-expanded').forEach(function(menu) {
+              if (menu !== submenu) { menu.classList.remove('mobile-expanded'); var t = menu.parentElement.querySelector('.mobile-submenu-toggle'); if(t) t.classList.remove('expanded'); }
+            });
+            submenu.classList.toggle('mobile-expanded');
+            toggleBtn.classList.toggle('expanded');
+          });
+        });
+      }
+      if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', initMobileSubmenuToggles); }
+      else { initMobileSubmenuToggles(); }
+      var resizeTimer; window.addEventListener('resize', function() { clearTimeout(resizeTimer); resizeTimer = setTimeout(initMobileSubmenuToggles, 250); });
+      // Re-initialize when mobile menu becomes visible (MutationObserver)
+      var observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          if (mutation.type === 'attributes') {
+            var target = mutation.target;
+            if (target.classList && (target.classList.contains('active') || target.classList.contains('open'))) {
+              setTimeout(initMobileSubmenuToggles, 100);
+            }
+          }
+        });
+      });
+      setTimeout(function() {
+        document.querySelectorAll('.mobile-menu, .nav-menu, #navMenu, nav').forEach(function(menu) {
+          observer.observe(menu, { attributes: true, attributeFilter: ['class', 'style'] });
+        });
+      }, 500);
+    })();
+    </script>
+</body></html>

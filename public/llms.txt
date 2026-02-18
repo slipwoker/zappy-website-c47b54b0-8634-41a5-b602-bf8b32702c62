@@ -1,0 +1,56 @@
+# נור זיד ושות׳ - משרד עורכי דין — Generative Engine Optimization Map
+
+> A General business.
+
+---
+
+## Pages
+
+### Home
+https://-c47b54b0.zappy5.app
+
+### Services
+https://-c47b54b0.zappy5.app/services
+
+### About
+https://-c47b54b0.zappy5.app/about
+
+### Contact
+https://-c47b54b0.zappy5.app/contact
+
+## Legal & Policy
+
+### Privacy Policy
+https://-c47b54b0.zappy5.app/privacy
+Information about how user data is collected, stored, and protected.
+
+### Terms & Conditions
+https://-c47b54b0.zappy5.app/terms
+Legal terms describing service usage, rights, and policies.
+
+### Accessibility Statement
+https://-c47b54b0.zappy5.app/accessibility
+Information about WCAG compliance and accessibility features.
+
+---
+
+# Business Context (for LLM understanding)
+
+## About נור זיד ושות׳ - משרד עורכי דין
+נור זיד ושות׳ - משרד עורכי דין is a business in the General industry.
+
+## Target Audience
+- Corporate Legal Teams
+- Real Estate Law Firms
+- Startup Legal Advisors
+- Intellectual Property Lawyers
+
+## Industry
+General
+
+---
+
+# Additional Resources
+
+- **Sitemap**: https://-c47b54b0.zappy5.app/sitemap.xml
+- **Robots.txt**: https://-c47b54b0.zappy5.app/robots.txt
